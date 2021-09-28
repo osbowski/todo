@@ -24,9 +24,10 @@ export default {
         deadline: Date.parse(deadline.value),
         createdAd: Date.now(),
       };
-      console.log(todo);
       store.dispatch("addTodoToList", todo);
     };
+
+
 
     return {
       todoName,
