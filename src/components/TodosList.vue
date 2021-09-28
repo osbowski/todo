@@ -1,18 +1,25 @@
 <template>
   <ul>
-    <li v-for="todo in todos" :key="todo.id">
-      <p>{{ todo.body }}</p>
-      <p>Dedline: {{todo.deadline}}</p>
-      <button>Done!</button>
-      <button>Edit</button>
-    </li>
+    <Todo
+    v-for="todo in todos"
+    :key="todo.id"
+    :id = "todo.id"
+    :body="todo.body"
+    :deadline="todo.deadline"
+     />
+    
   </ul>
 </template>
 
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
+
+import Todo from "./Todo.vue";
 export default {
+  components: {
+    Todo,
+  },
   setup() {
     const store = useStore();
     const todos = computed(() => store.getters.getTodos);
