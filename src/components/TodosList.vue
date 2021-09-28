@@ -4,7 +4,7 @@
     v-for="todo in todos"
     :key="todo.id"
     :id = "todo.id"
-    :body="todo.body"
+    :todoName="todo.todoName"
     :deadline="todo.deadline"
      />
     

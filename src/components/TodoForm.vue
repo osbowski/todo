@@ -8,27 +8,30 @@
 </template>
 
 <script>
-
-
 import { ref } from "vue";
+import { useStore } from "vuex";
 export default {
   setup() {
+    const store = useStore();
+
     const todoName = ref("");
     const deadline = ref(null);
 
-    const onAddTodo = ()=>{
-        const todo = {
-            todoName:todoName.value,
-            deadline:Date.parse(deadline.value),
-            createdAd:Date.now()
-        }
-        console.log(todo)
-    }
+    const onAddTodo = () => {
+      const todo = {
+        id: Math.floor(Math.random()*10410941209412),
+        todoName: todoName.value,
+        deadline: Date.parse(deadline.value),
+        createdAd: Date.now(),
+      };
+      console.log(todo);
+      store.dispatch("addTodoToList", todo);
+    };
 
     return {
       todoName,
       deadline,
-      onAddTodo
+      onAddTodo,
     };
   },
 };
