@@ -1,7 +1,6 @@
 <template>
   <teleport to="body">
     <div v-if="show" @click="tryClose" class="backdrop"></div>
-    <transition name="dialog">
       <dialog open v-if="show">
         <header>
           <slot name="header">
@@ -13,11 +12,10 @@
         </section>
         <menu v-if="!fixed">
           <slot name="actions">
-            <base-button @click="tryClose">Close</base-button>
+            <button @click="tryClose">Close</button>
           </slot>
         </menu>
       </dialog>
-    </transition>
   </teleport>
 </template>
 
