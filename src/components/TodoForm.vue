@@ -12,13 +12,19 @@ import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 export default {
   props: ["nameInEdit", "deadlineDateInEdit", "idInEdit"],
-  setup(props) {
+  emits:['close'],
+  setup(props,{emit}) {
     const store = useStore();
 
     const todoName = ref("");
     const deadline = ref(undefined);
     const id = ref(undefined);
     const buttonCaption = ref("Add to list");
+
+
+    const closeAfterAddTodo = ()=>{
+      emit('close')
+    }
 
     const onAddTodo = () => {
       const todo = {
@@ -32,6 +38,7 @@ export default {
       todoName.value = '';
       deadline.value = undefined;
       id.value = undefined;
+      closeAfterAddTodo();
     };
 
     onMounted(()=>{
