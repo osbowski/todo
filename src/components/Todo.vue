@@ -1,7 +1,7 @@
 <template>
   <li>
     <BaseDialog title="Edit todo" :show="isOpen" @close="closeDialog">
-      <TodoForm />
+      <TodoForm :nameInEdit="todoName" :idInEdit="id" :deadlineDateInEdit="deadline" />
     </BaseDialog>
     <p>{{ todoName }}</p>
     <p>Dedline: {{ deadlineDate }}</p>
