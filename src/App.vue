@@ -3,8 +3,29 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/login">Login</router-link>
   </div>
+  <button v-if="isLogged" @click="logout">Logout</button>
   <router-view />
 </template>
+
+<script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+export default {
+  setup() {
+    const store = useStore();
+
+    const isLogged = computed(() => store.getters.getAuthStatus);
+    const logout = ()=>{
+      store.dispatch("logout");
+    }
+
+    return {
+      isLogged,
+      logout
+    };
+  },
+};
+</script>
 
 <style>
 html {

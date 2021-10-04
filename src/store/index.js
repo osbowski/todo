@@ -4,7 +4,8 @@ export default createStore({
   state: {
     todos: [],
     userId:null,
-    token:null
+    token:null,
+    isLogged:false
   },
   mutations: {
     addTodoToList(state, payload) {
@@ -68,6 +69,8 @@ export default createStore({
         token:responseData.idToken,
         userId:responseData.localId
       })
+      context.state.isLogged = true;
+      console.log(context.state.isLogged)
     },
     logout(context){
       localStorage.removeItem('token')
@@ -78,7 +81,7 @@ export default createStore({
         token:null,
         userId:null
       })
-      
+      context.state.isLogged = false;
     },
     async addTodoToList(context, payload) {
       if (payload.id === null) {
@@ -135,5 +138,8 @@ export default createStore({
     getTodos(state) {
       return state.todos;
     },
+    getAuthStatus(state){
+      return state.isLogged;
+    }
   },
 });
