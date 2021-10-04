@@ -18,8 +18,13 @@
         v-model.trim="password"
       />
     </div>
-      <button>{{submitButtonCaption}}</button>
-      <button type="button" @click="switchAuthMode">{{switchModeButtonCaption}}</button>
+    <p v-if="!formIsValid">
+      Please enter a valid email and password(must be at least 6 characters).
+    </p>
+    <button>{{ submitButtonCaption }}</button>
+    <button type="button" @click="switchAuthMode">
+      {{ switchModeButtonCaption }}
+    </button>
   </form>
 </template>
 
@@ -32,25 +37,42 @@ export default {
     const email = ref("");
     const password = ref("");
     const mode = ref("login");
+    const formIsValid = ref(true);
 
-    const submitButtonCaption = computed(()=> mode.value === 'login' ? 'Login' : 'Singup');
-    const switchModeButtonCaption = computed(()=> mode.value === 'login' ? 'or Sing up' : 'or Log in');
+    const submitButtonCaption = computed(() =>
+      mode.value === "login" ? "Login" : "Singup"
+    );
+    const switchModeButtonCaption = computed(() =>
+      mode.value === "login" ? "or Sing up" : "or Log in"
+    );
 
-    const switchAuthMode = ()=> {
-        mode.value = mode.value==='login' ? 'signup' : 'login'
+    const switchAuthMode = () => {
+      mode.value = mode.value === "login" ? "signup" : "login";
     };
 
     const submitAuthForm = () => {
+      formIsValid.value = true;
+      if (
+        email.value === "" ||
+        !email.value.includes("@") ||
+        password.value.length < 6
+      ) {
+        formIsValid.value = false;
+        setTimeout(()=>formIsValid.value=true,3000)
+        return;
+      }
       const user = {
         email: email.value,
         password: password.value,
       };
-      if(mode.value === 'login'){
-           store.dispatch("login", user);
-      }else{
-           store.dispatch("signup", user);
+      if (mode.value === "login") {
+        store.dispatch("login", user);
+      } else {
+        store.dispatch("signup", user);
       }
     };
+
+    const changeValidation = ()=>formIsValid.value = true;
 
     return {
       email,
@@ -58,8 +80,10 @@ export default {
       mode,
       submitButtonCaption,
       switchModeButtonCaption,
+      formIsValid,
       switchAuthMode,
       submitAuthForm,
+      changeValidation
     };
   },
 };
