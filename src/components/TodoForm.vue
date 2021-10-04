@@ -37,8 +37,8 @@ export default {
       };
       store.dispatch("addTodoToList", todo);
       todoName.value = '';
-      deadline.value = undefined;
-      id.value = undefined;
+      deadline.value = null;
+      id.value = null;
       closeAfterAddTodo();
     };
 
