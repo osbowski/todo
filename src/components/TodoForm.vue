@@ -17,8 +17,8 @@ export default {
     const store = useStore();
 
     const todoName = ref("");
-    const deadline = ref(undefined);
-    const id = ref(undefined);
+    const deadline = ref(null);
+    const id = ref(null);
     const buttonCaption = ref("Add to list");
 
 
@@ -28,7 +28,8 @@ export default {
 
     const onAddTodo = () => {
       const todo = {
-        id: id.value ? id.value : Math.floor(Math.random()*10410941209412),
+        // id: id.value ? id.value : Math.floor(Math.random()*10410941209412),
+        id: id.value,
         todoName: todoName.value,
         // deadline: Date.parse(deadline.value),
         deadline:deadline.value,
