@@ -24,7 +24,6 @@ export default createStore({
   },
   actions: {
     async addTodoToList(context, payload) {
-      console.log(payload);
       if (payload.id === null) {
         const response = await fetch(
           `https://osb-todo-default-rtdb.firebaseio.com/todos.json`,
@@ -34,25 +33,44 @@ export default createStore({
           }
         );
         const responseData = await response.json();
-        console.log(responseData);
         const todoData = {
           ...payload,
           id: responseData.name,
         };
         context.commit("addTodoToList", todoData);
-      }else{
-        await fetch(`https://osb-todo-default-rtdb.firebaseio.com/todos/${payload.id}.json`,{
-          method:'PUT',
-          body:JSON.stringify(payload)
-        })
-        context.commit("addTodoToList", payload)
+      } else {
+        await fetch(
+          `https://osb-todo-default-rtdb.firebaseio.com/todos/${payload.id}.json`,
+          {
+            method: "PUT",
+            body: JSON.stringify(payload),
+          }
+        );
+        context.commit("addTodoToList", payload);
       }
     },
     async removeTodoFromList(context, payload) {
-      await fetch(`https://osb-todo-default-rtdb.firebaseio.com/todos/${payload}.json`,{
-        method:'DELETE',
-      })
+      await fetch(
+        `https://osb-todo-default-rtdb.firebaseio.com/todos/${payload}.json`,
+        {
+          method: "DELETE",
+        }
+      );
       context.commit("removeTodoFromList", payload);
+    },
+
+    async getTodosFromDB(context) {
+      const response = await fetch(
+        `https://osb-todo-default-rtdb.firebaseio.com/todos.json`
+      );
+      const todos = await response.json();
+      for (let key in todos) {
+        const todo = {
+          id: key,
+          ...todos[key],
+        };
+        context.commit("addTodoToList", todo);
+      }
     },
   },
   modules: {},
