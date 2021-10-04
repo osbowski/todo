@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 export default {
   setup() {
@@ -18,7 +18,10 @@ export default {
     const logout = ()=>{
       store.dispatch("logout");
     }
-
+    onBeforeMount(()=>{
+      console.log('BEFORE MOUNTED')
+      store.dispatch('tryLogin')
+    })
     return {
       isLogged,
       logout

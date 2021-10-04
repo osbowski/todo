@@ -3,9 +3,9 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     todos: [],
-    userId:null,
-    token:null,
-    isLogged:false
+    userId: null,
+    token: null,
+    isLogged: false,
   },
   mutations: {
     addTodoToList(state, payload) {
@@ -24,10 +24,10 @@ export default createStore({
     removeTodoFromList(state, payload) {
       state.todos = state.todos.filter((todo) => todo.id !== payload);
     },
-    setUser(state,payload){
+    setUser(state, payload) {
       state.userId = payload.useId;
       state.token = payload.token;
-    }
+    },
   },
   actions: {
     login(context, payload) {
@@ -35,6 +35,18 @@ export default createStore({
         ...payload,
         mode: "login",
       });
+    },
+    tryLogin(context){
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId');
+
+      if(token && userId){
+        context.commit('setUser',{
+          token,
+          userId
+        })
+        context.state.isLogged = true;
+      }
     },
     signup(context, payload) {
       return context.dispatch("auth", {
@@ -44,9 +56,9 @@ export default createStore({
     },
 
     async auth(context, payload) {
-      let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCd6wnwZ6_0z_Mrrma0Qd2YIOx6TsG2KbQ`;
+      let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_GOOGLE_API_KEY}`;
       if (payload.mode === "signup") {
-        url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCd6wnwZ6_0z_Mrrma0Qd2YIOx6TsG2KbQ`;
+        url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_GOOGLE_API_KEY}`;
       }
 
       const response = await fetch(url, {
@@ -65,22 +77,21 @@ export default createStore({
       localStorage.setItem("userId", responseData.localId);
       localStorage.setItem("tokenExpiration", expirationDate);
 
-      context.commit('setUser',{
-        token:responseData.idToken,
-        userId:responseData.localId
-      })
+      context.commit("setUser", {
+        token: responseData.idToken,
+        userId: responseData.localId,
+      });
       context.state.isLogged = true;
-      console.log(context.state.isLogged)
     },
-    logout(context){
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
-      localStorage.removeItem('tokenExpiration')
+    logout(context) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("tokenExpiration");
 
-      context.commit('setUser',{
-        token:null,
-        userId:null
-      })
+      context.commit("setUser", {
+        token: null,
+        userId: null,
+      });
       context.state.isLogged = false;
     },
     async addTodoToList(context, payload) {
@@ -138,8 +149,8 @@ export default createStore({
     getTodos(state) {
       return state.todos;
     },
-    getAuthStatus(state){
+    getAuthStatus(state) {
       return state.isLogged;
-    }
+    },
   },
 });
