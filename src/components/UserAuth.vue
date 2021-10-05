@@ -21,6 +21,7 @@
     <p v-if="!formIsValid">
       Please enter a valid email and password(must be at least 6 characters).
     </p>
+    <p v-if="authError">{{authError}}</p>
     <button>{{ submitButtonCaption }}</button>
     <button type="button" @click="switchAuthMode">
       {{ switchModeButtonCaption }}
@@ -31,15 +32,14 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
-// import { useRouter } from 'vue-router';
 export default {
   setup() {
-    // const router = useRouter();
     const store = useStore();
     const email = ref("");
     const password = ref("");
     const mode = ref("login");
     const formIsValid = ref(true);
+    const errorMessage = ref(null);
 
     const submitButtonCaption = computed(() =>
       mode.value === "login" ? "Login" : "Singup"
@@ -48,11 +48,13 @@ export default {
       mode.value === "login" ? "or Sing up" : "or Log in"
     );
 
+    const authError = computed(()=>store.getters.getAuthError);
+
     const switchAuthMode = () => {
       mode.value = mode.value === "login" ? "signup" : "login";
     };
 
-    const submitAuthForm = async  () => {
+    const submitAuthForm = async () => {
       formIsValid.value = true;
       if (
         email.value === "" ||
@@ -60,24 +62,27 @@ export default {
         password.value.length < 6
       ) {
         formIsValid.value = false;
-        setTimeout(()=>formIsValid.value=true,3000)
+        setTimeout(() => (formIsValid.value = true), 3000);
         return;
       }
       const user = {
         email: email.value,
         password: password.value,
       };
-      if (mode.value === "login") {
-        await store.dispatch("login", user);
-        // router.push('/')
-      } else {
-        await store.dispatch("signup", user);
-        // router.push('/')
+
+      try {
+        if (mode.value === "login") {
+          await store.dispatch("login", user);
+        } else {
+          await store.dispatch("signup", user);
+        }
+        
+      } catch (error) {
+        errorMessage.value = error
       }
-      
     };
 
-    const changeValidation = ()=>formIsValid.value = true;
+    const changeValidation = () => (formIsValid.value = true);
 
     return {
       email,
@@ -86,9 +91,10 @@ export default {
       submitButtonCaption,
       switchModeButtonCaption,
       formIsValid,
+      authError,
       switchAuthMode,
       submitAuthForm,
-      changeValidation
+      changeValidation,
     };
   },
 };

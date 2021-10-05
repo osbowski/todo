@@ -1,7 +1,5 @@
 import { createStore } from "vuex";
-import router from '../router'
-
-
+import router from "../router";
 
 export default createStore({
   state: {
@@ -9,6 +7,7 @@ export default createStore({
     userId: null,
     token: null,
     isLogged: false,
+    authError:null
   },
   mutations: {
     addTodoToList(state, payload) {
@@ -39,15 +38,15 @@ export default createStore({
         mode: "login",
       });
     },
-    tryLogin(context){
-      const token = localStorage.getItem('token');
-      const userId = localStorage.getItem('userId');
+    tryLogin(context) {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
 
-      if(token && userId){
-        context.commit('setUser',{
+      if (token && userId) {
+        context.commit("setUser", {
           token,
-          userId
-        })
+          userId,
+        });
         context.state.isLogged = true;
       }
     },
@@ -59,8 +58,7 @@ export default createStore({
     },
 
     async auth(context, payload) {
-  
-      
+      context.state.authError= null;
       let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_GOOGLE_API_KEY}`;
       if (payload.mode === "signup") {
         url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_GOOGLE_API_KEY}`;
@@ -74,20 +72,25 @@ export default createStore({
           returnSecureToken: true,
         }),
       });
-
       const responseData = await response.json();
-      const expires = +responseData.expiresIn * 1000;
-      const expirationDate = new Date().getTime() + expires;
-      localStorage.setItem("token", responseData.idToken);
-      localStorage.setItem("userId", responseData.localId);
-      localStorage.setItem("tokenExpiration", expirationDate);
+      if (!response.ok) {
+        context.state.authError = 'Authentication failed, check your login and password';
+      }else{
 
-      context.commit("setUser", {
-        token: responseData.idToken,
-        userId: responseData.localId,
-      });
-      context.state.isLogged = true;
-      router.push('/')
+        const expires = +responseData.expiresIn * 1000;
+        const expirationDate = new Date().getTime() + expires;
+        localStorage.setItem("token", responseData.idToken);
+        localStorage.setItem("userId", responseData.localId);
+        localStorage.setItem("tokenExpiration", expirationDate);
+  
+        context.commit("setUser", {
+          token: responseData.idToken,
+          userId: responseData.localId,
+        });
+        context.state.isLogged = true;
+        router.push('/')
+      }
+
 
     },
     logout(context) {
@@ -159,5 +162,9 @@ export default createStore({
     getAuthStatus(state) {
       return state.isLogged;
     },
+
+    getAuthError(state){
+      return state.authError;
+    }
   },
 });
