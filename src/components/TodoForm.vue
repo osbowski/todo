@@ -33,6 +33,7 @@ export default {
         // deadline: Date.parse(deadline.value),
         deadline: deadline.value,
         createdAd: Date.now(),
+
       };
       store.dispatch("addTodoToList", todo);
       todoName.value = "";

@@ -11,6 +11,7 @@ export default createStore({
   },
   mutations: {
     addTodoToList(state, payload) {
+
       const existingElement = state.todos.find(
         (todo) => todo.id === payload.id
       );
@@ -27,7 +28,7 @@ export default createStore({
       state.todos = state.todos.filter((todo) => todo.id !== payload);
     },
     setUser(state, payload) {
-      state.userId = payload.useId;
+      state.userId = payload.userId;
       state.token = payload.token;
     },
   },
@@ -103,11 +104,12 @@ export default createStore({
         userId: null,
       });
       context.state.isLogged = false;
+      context.state.todos = [];
     },
     async addTodoToList(context, payload) {
       if (payload.id === null) {
         const response = await fetch(
-          `https://osb-todo-default-rtdb.firebaseio.com/todos.json`,
+          `https://osb-todo-default-rtdb.firebaseio.com/todos/${context.state.userId}.json`,
           {
             method: "POST",
             body: JSON.stringify(payload),
@@ -121,7 +123,7 @@ export default createStore({
         context.commit("addTodoToList", todoData);
       } else {
         await fetch(
-          `https://osb-todo-default-rtdb.firebaseio.com/todos/${payload.id}.json`,
+          `https://osb-todo-default-rtdb.firebaseio.com/todos/${context.state.userId}/${payload.id}.json`,
           {
             method: "PUT",
             body: JSON.stringify(payload),
@@ -132,7 +134,7 @@ export default createStore({
     },
     async removeTodoFromList(context, payload) {
       await fetch(
-        `https://osb-todo-default-rtdb.firebaseio.com/todos/${payload}.json`,
+        `https://osb-todo-default-rtdb.firebaseio.com/todos/${context.state.userId}/${payload}.json`,
         {
           method: "DELETE",
         }
@@ -141,8 +143,9 @@ export default createStore({
     },
 
     async getTodosFromDB(context) {
+      
       const response = await fetch(
-        `https://osb-todo-default-rtdb.firebaseio.com/todos.json`
+        `https://osb-todo-default-rtdb.firebaseio.com/todos/${context.state.userId}.json`
       );
       const todos = await response.json();
       for (let key in todos) {

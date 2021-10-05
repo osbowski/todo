@@ -5,7 +5,6 @@
     </BaseDialog>
     <p>{{ todoName }}</p>
     <p>Dedline: {{ deadlineDate }}</p>
-    <p>{{ id }}</p>
     <button @click="onDeleteTodo">Done!</button>
     <button @click ="openDialog">Edit</button>
   </li>
