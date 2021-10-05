@@ -1,4 +1,7 @@
 import { createStore } from "vuex";
+import router from '../router'
+
+
 
 export default createStore({
   state: {
@@ -56,6 +59,8 @@ export default createStore({
     },
 
     async auth(context, payload) {
+  
+      
       let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_GOOGLE_API_KEY}`;
       if (payload.mode === "signup") {
         url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_GOOGLE_API_KEY}`;
@@ -82,6 +87,8 @@ export default createStore({
         userId: responseData.localId,
       });
       context.state.isLogged = true;
+      router.push('/')
+
     },
     logout(context) {
       localStorage.removeItem("token");

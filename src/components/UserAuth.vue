@@ -31,10 +31,10 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 export default {
   setup() {
-    const router = useRouter();
+    // const router = useRouter();
     const store = useStore();
     const email = ref("");
     const password = ref("");
@@ -69,10 +69,10 @@ export default {
       };
       if (mode.value === "login") {
         await store.dispatch("login", user);
-        router.push('/')
+        // router.push('/')
       } else {
         await store.dispatch("signup", user);
-        router.push('/')
+        // router.push('/')
       }
       
     };
