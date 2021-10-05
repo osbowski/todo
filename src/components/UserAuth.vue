@@ -31,8 +31,10 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from 'vue-router';
 export default {
   setup() {
+    const router = useRouter();
     const store = useStore();
     const email = ref("");
     const password = ref("");
@@ -50,7 +52,7 @@ export default {
       mode.value = mode.value === "login" ? "signup" : "login";
     };
 
-    const submitAuthForm = () => {
+    const submitAuthForm = async  () => {
       formIsValid.value = true;
       if (
         email.value === "" ||
@@ -66,10 +68,13 @@ export default {
         password: password.value,
       };
       if (mode.value === "login") {
-        store.dispatch("login", user);
+        await store.dispatch("login", user);
+        router.push('/')
       } else {
-        store.dispatch("signup", user);
+        await store.dispatch("signup", user);
+        router.push('/')
       }
+      
     };
 
     const changeValidation = ()=>formIsValid.value = true;

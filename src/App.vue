@@ -1,25 +1,28 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/login">Login</router-link>
+    <router-link to="/auth">Login</router-link>
+    <button v-if="isLogged" @click="logout">Logout</button>
   </div>
-  <button v-if="isLogged" @click="logout">Logout</button>
   <router-view />
 </template>
 
 <script>
 import { computed, onBeforeMount } from "vue";
 import { useStore } from "vuex";
+import {useRouter} from 'vue-router';
 export default {
   setup() {
     const store = useStore();
+    const router = useRouter();
 
     const isLogged = computed(() => store.getters.getAuthStatus);
     const logout = ()=>{
       store.dispatch("logout");
+      router.push('/auth')
+      
     }
     onBeforeMount(()=>{
-      console.log('BEFORE MOUNTED')
       store.dispatch('tryLogin')
     })
     return {
