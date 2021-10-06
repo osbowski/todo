@@ -48,7 +48,7 @@ export default {
       mode.value === "login" ? "or Sing up" : "or Log in"
     );
 
-    const authError = computed(()=>store.getters.getAuthError);
+    const authError = computed(()=>store.getters['auth/getAuthError']);
 
     const switchAuthMode = () => {
       mode.value = mode.value === "login" ? "signup" : "login";
@@ -72,9 +72,9 @@ export default {
 
       try {
         if (mode.value === "login") {
-          await store.dispatch("login", user);
+          await store.dispatch("auth/login", user);
         } else {
-          await store.dispatch("signup", user);
+          await store.dispatch("auth/signup", user);
         }
         
       } catch (error) {

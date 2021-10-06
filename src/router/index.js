@@ -1,44 +1,40 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import UserAuth from '../components/UserAuth.vue'
-import store from '../store/';
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "../views/Home.vue";
+import UserAuth from "../components/UserAuth.vue";
+import store from "../store/";
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: "/",
+    name: "Home",
     component: Home,
-    meta:{ requiresAuth:true }
+    meta: { requiresAuth: true },
   },
   {
-    path: '/auth',
-    name: 'Auth',
-    component:UserAuth,
-    meta:{ requiresUnauth:true }
-    // component: () => import(/* webpackChunkName: "about" */ '../components/UserAuth.vue')
+    path: "/auth",
+    name: "Auth",
+    component: UserAuth,
+    meta: { requiresUnauth: true },
   },
   {
-    path:'/:notFound(.*)',
-    redirect:'/'
-  }
-]
+    path: "/:notFound(.*)",
+    redirect: "/",
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
-router.beforeEach(async (to,_,next)=>{  
- if(to.meta.requiresUnauth && store.getters.getAuthStatus){
-    next('/')
-  }else if(to.meta.requiresAuth && !store.getters.getAuthStatus){
-    next('/auth')
+router.beforeEach(async (to, _, next) => {
+  if (to.meta.requiresUnauth && store.getters['auth/getAuthStatus']) {
+    next("/");
+  } else if (to.meta.requiresAuth && !store.getters['auth/getAuthStatus']) {
+    next("/auth");
+  } else {
+    next();
   }
-  
-  else{
-    next()
-  }
-})
+});
 
-
-export default router
+export default router;

@@ -10,24 +10,23 @@
 <script>
 import { computed, onBeforeMount } from "vue";
 import { useStore } from "vuex";
-import {useRouter} from 'vue-router';
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const store = useStore();
     const router = useRouter();
 
-    const isLogged = computed(() => store.getters.getAuthStatus);
-    const logout = ()=>{
-      store.dispatch("logout");
-      router.push('/auth')
-      
-    }
-    onBeforeMount(()=>{
-      store.dispatch('tryLogin')
-    })
+    const isLogged = computed(() => store.getters['auth/getAuthStatus']);
+    const logout = () => {
+      store.dispatch("auth/logout");
+      router.push("/auth");
+    };
+    onBeforeMount(() => {
+      store.dispatch("auth/tryLogin");
+    });
     return {
       isLogged,
-      logout
+      logout,
     };
   },
 };
