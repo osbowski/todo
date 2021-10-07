@@ -1,8 +1,8 @@
 <template>
-  <form @submit.prevent="submitAuthForm">
-    <div>
+  <va-form class="flex xs8 md6" @submit.prevent="submitAuthForm">
+    <div class="mb-4 mr-4">
       <label for="email">Email</label>
-      <input
+      <va-input
         type="email"
         id="email"
         autocomplete="username"
@@ -11,9 +11,9 @@
     </div>
     <div>
       <label for="password">Password</label>
-      <input
-        id="password"
+      <va-input
         type="password"
+        id="password"
         autocomplete="current-password"
         v-model.trim="password"
       />
@@ -21,12 +21,14 @@
     <p v-if="!formIsValid">
       Please enter a valid email and password(must be at least 6 characters).
     </p>
-    <p v-if="authError">{{authError}}</p>
-    <button>{{ submitButtonCaption }}</button>
-    <button type="button" @click="switchAuthMode">
-      {{ switchModeButtonCaption }}
-    </button>
-  </form>
+    <p v-if="authError">{{ authError }}</p>
+    <div class="mt-4">
+      <va-button outline class="mr-4" @click="submitAuthForm">{{ submitButtonCaption }}</va-button>
+      <va-button flat type="button" @click="switchAuthMode">
+        {{ switchModeButtonCaption }}
+      </va-button>
+    </div>
+  </va-form>
 </template>
 
 <script>
@@ -48,7 +50,7 @@ export default {
       mode.value === "login" ? "or Sing up" : "or Log in"
     );
 
-    const authError = computed(()=>store.getters['auth/getAuthError']);
+    const authError = computed(() => store.getters["auth/getAuthError"]);
 
     const switchAuthMode = () => {
       mode.value = mode.value === "login" ? "signup" : "login";
@@ -76,9 +78,8 @@ export default {
         } else {
           await store.dispatch("auth/signup", user);
         }
-        
       } catch (error) {
-        errorMessage.value = error
+        errorMessage.value = error;
       }
     };
 
@@ -99,3 +100,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.va-form{
+  margin: 0 auto;
+}
+</style>
