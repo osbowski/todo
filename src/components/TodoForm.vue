@@ -6,15 +6,15 @@
         <va-input
           color="#000"
           type="text"
-          placeholder="To do"
+          label="Todo"
           v-model="todoName"
         />
       </div>
       <div>
-        <va-input color="#000" type="date" name="deadline" v-model="deadline" />
+        <va-input label="Deadline" color="#000" type="date" name="deadline" v-model="deadline" />
       </div>
     </div>
-    <va-button outline color="#000" @click.prevent="onAddTodo">{{
+    <va-button outline color="#000" @click.prevent="onAddTodo" :class="{editButton:!!id}">{{
       buttonCaption
     }}</va-button>
   </va-form>
@@ -68,6 +68,7 @@ export default {
       deadline,
       onAddTodo,
       buttonCaption,
+      id
     };
   },
 };
@@ -86,5 +87,9 @@ h2{
 }
 .va-input {
   width: 226px;
+}
+.editButton{
+  float:right;
+  margin-top:1rem;
 }
 </style>

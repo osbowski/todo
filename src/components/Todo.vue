@@ -23,8 +23,12 @@
         <p>{{ todoName }}</p>
       </va-card-content>
     </va-card>
-    <va-button outline color="#000" @click="onDeleteTodo" class="mr-1">Done!</va-button>
-    <va-button outline color="#000" @click="openDialog" class="ml-1">Edit</va-button>
+    <va-button outline color="#000" @click="onDeleteTodo" class="mr-1"
+      >Done!</va-button
+    >
+    <va-button outline color="#000" @click="openDialog" class="ml-1"
+      >Edit</va-button
+    >
   </li>
 </template>
 
@@ -87,8 +91,8 @@ export default {
   color: red;
 }
 
-.va-card--outlined{
-  border-color:#000;
+.va-card--outlined {
+  border-color: #000;
 }
 .va-card__title {
   flex-direction: column;

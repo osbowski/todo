@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
-import auth from './auth';
-import actions from './actions';
-import mutations from './mutations';
+import auth from "./auth";
+import actions from "./actions";
+import mutations from "./mutations";
 
 export default createStore({
   state: {
@@ -12,7 +12,9 @@ export default createStore({
   actions,
   getters: {
     getTodos(state) {
-      return state.todos;
+      return state.todos.sort(
+        (x, y) => new Date(x.deadline) - new Date(y.deadline)
+      );
     },
   },
 });

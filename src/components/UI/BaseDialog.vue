@@ -12,7 +12,7 @@
         </section>
         <menu v-if="!fixed">
           <slot name="actions">
-            <button @click="tryClose">Close</button>
+            <!-- <button @click="tryClose">Close</button> -->
           </slot>
         </menu>
       </dialog>
@@ -65,36 +65,20 @@ dialog {
   left: 10%;
   width: 80%;
   z-index: 100;
-  border-radius: 12px;
+  border-radius: 0.375rem;
   border: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 0;
   margin: 0;
   overflow: hidden;
   background-color: white;
+  font-family:Avenir, Helvetica, Arial, sans-serif;
 }
 
-.dialog-enter-from,
-.dialog-leave-to{
-  opacity: 0;
-  transform: scale(0.8);
-}
 
-.dialog-enter-active{
-  transition: all 0.3s ease-out;
-}
-.dialog-leave-active{
-  transition: all 0.3s ease-in;
-}
-
-.dialog-enter-to,
-.dialog-leave-from{
-  opacity: 1;
-  transform: scale(1);
-}
 
 header {
-  background-color: #3a0061;
+  background-color: #000;
   color: white;
   width: 100%;
   padding: 1rem;
