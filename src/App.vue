@@ -1,39 +1,22 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/auth">Login</router-link>
-    <button v-if="isLogged" @click="logout">Logout</button>
-  </div>
+  <TheHeader />
   <router-view />
 </template>
 
 <script>
-import { computed, onBeforeMount } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-export default {
-  setup() {
-    const store = useStore();
-    const router = useRouter();
+import TheHeader from './components/TheHeader.vue';
 
-    const isLogged = computed(() => store.getters['auth/getAuthStatus']);
-    const logout = () => {
-      store.dispatch("auth/logout");
-      router.push("/auth");
-    };
-    onBeforeMount(() => {
-      store.dispatch("auth/tryLogin");
-    });
-    return {
-      isLogged,
-      logout,
-    };
+export default {
+  components:{
+    TheHeader,
   },
-};
+  setup() {
+
+  },
+}
 </script>
 
 <style>
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
