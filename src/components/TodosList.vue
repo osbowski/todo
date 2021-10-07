@@ -1,5 +1,6 @@
 <template>
   <ul>
+    <h2>Yours todo</h2>
     <Todo
       v-for="todo in todos"
       :key="todo.id"
@@ -31,10 +32,14 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-li {
-  padding: 0.5rem;
-  margin: 0.5rem;
+ul{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2{
+  margin-bottom: 2rem;
 }
 </style>

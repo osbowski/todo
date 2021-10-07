@@ -1,21 +1,25 @@
 <template>
   <va-form class="flex xs8 md6" @submit.prevent="submitAuthForm">
-    <div class="mb-4 mr-4">
-      <label for="email">Email</label>
+    <div class="mb-4">
       <va-input
         type="email"
         id="email"
+        label="Email"
         autocomplete="username"
         v-model.trim="email"
+        bordered
+        color="#000"
       />
     </div>
     <div>
-      <label for="password">Password</label>
       <va-input
         type="password"
         id="password"
+        label="Password"
         autocomplete="current-password"
         v-model.trim="password"
+        bordered
+        color="#000"
       />
     </div>
     <p v-if="!formIsValid">
@@ -23,8 +27,8 @@
     </p>
     <p v-if="authError">{{ authError }}</p>
     <div class="mt-4">
-      <va-button outline class="mr-4" @click="submitAuthForm">{{ submitButtonCaption }}</va-button>
-      <va-button flat type="button" @click="switchAuthMode">
+      <va-button outline color="#000" class="mr-4" @click="submitAuthForm">{{ submitButtonCaption }}</va-button>
+      <va-button flat color="#000" type="button" @click="switchAuthMode">
         {{ switchModeButtonCaption }}
       </va-button>
     </div>

@@ -1,20 +1,22 @@
 <template>
-  <va-form>
-    <div class="layout gutter--md">
-      <div class="row justify--center mb-2">
-        <div>
-          <va-input type="text" placeholder="To do" v-model="todoName" />
-        </div>
-        <div>
-          <va-date-input
-            placeholder="Deadline"
-            name="deadline"
-            v-model="deadline"
-          />
-        </div>
+  <h2>Add new todo</h2>
+  <va-form class="mb-4 mt-2">
+    <div class="row justify--center mb-2">
+      <div>
+        <va-input
+          color="#000"
+          type="text"
+          placeholder="To do"
+          v-model="todoName"
+        />
       </div>
-      <va-button outline @click.prevent="onAddTodo">{{ buttonCaption }}</va-button>
+      <div>
+        <va-input color="#000" type="date" name="deadline" v-model="deadline" />
+      </div>
     </div>
+    <va-button outline color="#000" @click.prevent="onAddTodo">{{
+      buttonCaption
+    }}</va-button>
   </va-form>
 </template>
 
@@ -72,10 +74,13 @@ export default {
 </script>
 
 <style scoped>
+h2{
+  font-size:2rem;
+}
 .va-form {
   margin: 0 auto;
 }
-.row{
+.row {
   column-gap: 1rem;
   row-gap: 1rem;
 }
