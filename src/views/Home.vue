@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>Hello vue</h1>
     <TodoForm />
     <TodosList />
   </div>

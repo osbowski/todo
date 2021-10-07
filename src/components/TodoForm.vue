@@ -1,10 +1,21 @@
 <template>
-  <form>
-    <input type="text" placeholder="To do" v-model="todoName" />
-    <label for="deadline">Deadline for this:</label>
-    <input type="date" name="deadline" v-model="deadline" />
-    <button @click.prevent="onAddTodo">{{ buttonCaption }}</button>
-  </form>
+  <va-form>
+    <div class="layout gutter--md">
+      <div class="row justify--center mb-2">
+        <div>
+          <va-input type="text" placeholder="To do" v-model="todoName" />
+        </div>
+        <div>
+          <va-date-input
+            placeholder="Deadline"
+            name="deadline"
+            v-model="deadline"
+          />
+        </div>
+      </div>
+      <va-button outline @click.prevent="onAddTodo">{{ buttonCaption }}</va-button>
+    </div>
+  </va-form>
 </template>
 
 <script>
@@ -33,7 +44,6 @@ export default {
         // deadline: Date.parse(deadline.value),
         deadline: deadline.value,
         createdAd: Date.now(),
-
       };
       store.dispatch("addTodoToList", todo);
       todoName.value = "";
@@ -60,3 +70,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.va-form {
+  margin: 0 auto;
+}
+.row{
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
+.va-input {
+  width: 226px;
+}
+</style>
