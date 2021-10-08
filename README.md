@@ -3,7 +3,8 @@
 ## Project Overview
 This is simple Todo App with db and authentication (Firebase). Create your account and add Todo with deadline. You can edit and remove todo. When the deadline is close, todo will be marked.
 
-
+## Live
+https://todo-osb.herokuapp.com/
 ## Project setup
 ```
 npm install
