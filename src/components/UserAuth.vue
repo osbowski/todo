@@ -1,4 +1,5 @@
 <template>
+  <h2>Login or signup to add some todos!</h2>
   <va-form class="flex xs8 md6" @submit.prevent="submitAuthForm">
     <div class="mb-4">
       <va-input
@@ -8,7 +9,7 @@
         autocomplete="username"
         v-model.trim="email"
         bordered
-        color="#000"
+        color="#100C08"
       />
     </div>
     <div>
@@ -19,16 +20,29 @@
         autocomplete="current-password"
         v-model.trim="password"
         bordered
-        color="#000"
+        color="#100C08"
       />
     </div>
-    <p v-if="!formIsValid">
+    <p v-if="!formIsValid" class="alert-text">
       Please enter a valid email and password(must be at least 6 characters).
     </p>
-    <p v-if="authError">{{ authError }}</p>
+    <p class="alert-text" v-if="authError">{{ authError }}</p>
     <div class="mt-4">
-      <va-button outline color="#000" class="mr-4" @click="submitAuthForm">{{ submitButtonCaption }}</va-button>
-      <va-button flat color="#000" type="button" @click="switchAuthMode">
+      <va-button
+        outline
+        color="#100C08"
+        :rounded="false"
+        class="mr-4"
+        @click="submitAuthForm"
+        >{{ submitButtonCaption }}</va-button
+      >
+      <va-button
+        flat
+        color="#100C08"
+        type="button"
+        :rounded="false"
+        @click="switchAuthMode"
+      >
         {{ switchModeButtonCaption }}
       </va-button>
     </div>
@@ -106,7 +120,16 @@ export default {
 </script>
 
 <style scoped>
-.va-form{
+.alert-text {
+  color: #e42024;
+  margin-top: 1rem;
+}
+.va-form {
   margin: 0 auto;
+}
+
+h2 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
 }
 </style>

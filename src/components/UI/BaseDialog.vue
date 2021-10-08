@@ -1,21 +1,19 @@
 <template>
   <teleport to="body">
     <div v-if="show" @click="tryClose" class="backdrop"></div>
-      <dialog open v-if="show">
-        <header>
-          <slot name="header">
-            <h2>{{ title }}</h2>
-          </slot>
-        </header>
-        <section>
-          <slot></slot>
-        </section>
-        <menu v-if="!fixed">
-          <slot name="actions">
-            <!-- <button @click="tryClose">Close</button> -->
-          </slot>
-        </menu>
-      </dialog>
+    <dialog open v-if="show">
+      <header>
+        <slot name="header">
+          <h2>{{ title }}</h2>
+        </slot>
+      </header>
+      <section>
+        <slot></slot>
+      </section>
+      <menu v-if="!fixed">
+        <slot name="actions"> </slot>
+      </menu>
+    </dialog>
   </teleport>
 </template>
 
@@ -24,27 +22,27 @@ export default {
   props: {
     show: {
       type: Boolean,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: false
+      required: false,
     },
     fixed: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
-  emits: ['close'],
+  emits: ["close"],
   methods: {
     tryClose() {
       if (this.fixed) {
         return;
       }
-      this.$emit('close');
-    }
-  }
+      this.$emit("close");
+    },
+  },
 };
 </script>
 
@@ -72,13 +70,11 @@ dialog {
   margin: 0;
   overflow: hidden;
   background-color: white;
-  font-family:Avenir, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
-
-
 header {
-  background-color: #000;
+  background-color: #100c08;
   color: white;
   width: 100%;
   padding: 1rem;

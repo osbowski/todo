@@ -1,22 +1,29 @@
 <template>
   <h2>Add new todo</h2>
-  <va-form class="mb-4 mt-2">
-    <div class="row justify--center mb-2">
+  <va-form class="mb-4 mt-4">
+    <div class="row justify--center">
+      <div>
+        <va-input color="#000" type="text" label="Todo" v-model="todoName" />
+      </div>
       <div>
         <va-input
+          label="Deadline"
           color="#000"
-          type="text"
-          label="Todo"
-          v-model="todoName"
+          type="date"
+          name="deadline"
+          v-model="deadline"
         />
       </div>
-      <div>
-        <va-input label="Deadline" color="#000" type="date" name="deadline" v-model="deadline" />
-      </div>
     </div>
-    <va-button outline color="#000" @click.prevent="onAddTodo" :class="{editButton:!!id}">{{
-      buttonCaption
-    }}</va-button>
+    <va-button
+      outline
+      :rounded="false"
+      color="#000"
+      @click.prevent="onAddTodo"
+      :class="{ editButton: !!id }"
+      class="mt-4"
+      >{{ buttonCaption }}</va-button
+    >
   </va-form>
 </template>
 
@@ -40,10 +47,8 @@ export default {
 
     const onAddTodo = () => {
       const todo = {
-        // id: id.value ? id.value : Math.floor(Math.random()*10410941209412),
         id: id.value,
         todoName: todoName.value,
-        // deadline: Date.parse(deadline.value),
         deadline: deadline.value,
         createdAd: Date.now(),
       };
@@ -68,19 +73,18 @@ export default {
       deadline,
       onAddTodo,
       buttonCaption,
-      id
+      id,
     };
   },
 };
 </script>
 
 <style scoped>
-h2{
-  font-size:2rem;
+h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
-.va-form {
-  margin: 0 auto;
-}
+
 .row {
   column-gap: 1rem;
   row-gap: 1rem;
@@ -88,8 +92,8 @@ h2{
 .va-input {
   width: 226px;
 }
-.editButton{
-  float:right;
-  margin-top:1rem;
+.editButton {
+  float: right;
+  margin: 1rem 0;
 }
 </style>

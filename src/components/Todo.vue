@@ -9,12 +9,11 @@
       />
     </BaseDialog>
     <va-card
-      outlined
+      :bordered="false"
       stripe-color="#ff0000"
       v-bind="{ stripe: timeAlert }"
       class="mb-2"
     >
-      <!-- <p v-if="timeAlert">Hurry up with this!</p> -->
       <va-card-title>
         <p>Dedline: {{ deadlineDate }}</p>
         <p :class="{ timeAlert: timeAlert }">Days left : {{ timeToEnd }}</p>
@@ -22,13 +21,25 @@
       <va-card-content>
         <p>{{ todoName }}</p>
       </va-card-content>
+      <va-card-content>
+        <va-button
+          outline
+          color="#100C08"
+          :rounded="false"
+          @click="onDeleteTodo"
+          class="mr-1"
+          >Done!</va-button
+        >
+        <va-button
+          outline
+          color="#100C08"
+          :rounded="false"
+          @click="openDialog"
+          class="ml-1"
+          >Edit</va-button
+        >
+      </va-card-content>
     </va-card>
-    <va-button outline color="#000" @click="onDeleteTodo" class="mr-1"
-      >Done!</va-button
-    >
-    <va-button outline color="#000" @click="openDialog" class="ml-1"
-      >Edit</va-button
-    >
   </li>
 </template>
 
@@ -47,9 +58,8 @@ export default {
   props: ["todoName", "deadline", "id"],
   setup(props) {
     const store = useStore();
-    // const daysToEnd = ref(null);
-
     const isOpen = ref(false);
+
     const deadlineDate = computed(() => {
       return new Date(props.deadline).toLocaleDateString();
     });
@@ -88,11 +98,13 @@ export default {
 
 <style scoped>
 .timeAlert {
-  color: red;
+  color: #e42024;
 }
-
+.va-card {
+  padding: 0.1rem 0;
+}
 .va-card--outlined {
-  border-color: #000;
+  border-color: #100c08;
 }
 .va-card__title {
   flex-direction: column;

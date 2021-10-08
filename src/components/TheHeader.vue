@@ -1,11 +1,18 @@
 <template>
-  <va-navbar color="dark" class="mb-5">
+  <va-navbar color="#100C08" class="mb-5">
     <template #left>
       <va-navbar-item>TodoApp</va-navbar-item>
     </template>
     <template #right>
       <va-navbar-item>
-        <va-button outline color="#fff" v-if="isLogged" @click="logout">Logout</va-button>
+        <va-button
+          outline
+          color="#fff"
+          :rounded="false"
+          v-if="isLogged"
+          @click="logout"
+          >Logout</va-button
+        >
       </va-navbar-item>
     </template>
   </va-navbar>
@@ -38,3 +45,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.va-navbar {
+  padding: 1rem 12%;
+}
+</style>

@@ -33,13 +33,13 @@ export default {
 };
 </script>
 <style scoped>
-ul{
+ul {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-h2{
+h2 {
   margin-bottom: 2rem;
 }
 </style>

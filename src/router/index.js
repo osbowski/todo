@@ -28,9 +28,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, _, next) => {
-  if (to.meta.requiresUnauth && store.getters['auth/getAuthStatus']) {
+  if (to.meta.requiresUnauth && store.getters["auth/getAuthStatus"]) {
     next("/");
-  } else if (to.meta.requiresAuth && !store.getters['auth/getAuthStatus']) {
+  } else if (to.meta.requiresAuth && !store.getters["auth/getAuthStatus"]) {
     next("/auth");
   } else {
     next();
