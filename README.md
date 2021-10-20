@@ -5,6 +5,11 @@ This is simple Todo App with db and authentication (Firebase). Create your accou
 
 ## Live
 https://todo-osb.herokuapp.com/
+
+test account:
+email:test@test.com
+pass: test123
+
 ## Project setup
 ```
 npm install
